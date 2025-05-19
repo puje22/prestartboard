@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epiroc Pre-Start Board - Enhanced</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+            min-height: 60px;
+        }
+        .sticker {
+            width: 120px;
+            height: auto;
+            text-align: auto;
+            line-height: 30px;
+            cursor: grab;
+            border: 2px solid black;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px;
+            background-color: yellow;
+        }
+        
+        .urt_sticker {
+            width: 155px;
+            height: auto;
+            text-align: auto;
+            line-height: 30px;
+            cursor: grab;
+            border: 2px solid black;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px;
+            background-color: yellow;
+        }
+
+        #stickersContainer {
+            text-align: center;
+            padding: 10px;
+            border-bottom: 2px solid black;
+        }
+        .dropzone {
+            min-height: 80px;
+            border: 1px dashed gray;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .editable {
+            cursor: pointer;
+            background-color: #f0f0f0;
+        }
+        .log-container {
+            margin-top: 20px;
+            border: 1px solid black;
+            padding: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: #eaeaea;
+        }
+        .export-btn {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: gray;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #dugaar {
+            width: 20px;
+        }
+
+        .reset-btn {
+        margin-top: 15px;
+        padding: 10px;
+        background-color: grey;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h2 style="text-align: center;"
+>Epiroc Pre Start Board /Simple draft/</h2>
+
+<!--
+
+<h3>Safety Stickers</h3>
+<div id="stickersContainer">
+     15 Draggable Stickers 
+    <div class="sticker" draggable="true">
+        <img src="https://www.mysafetylabels.com/img/lg/L/Fire-Hazard-ISO-7010-Safety-Label-LB-0451.gif" alt="Fire Hazard Sign">
+        Hazard 1
+    </div>
+</div>
+
+-->
+
+<h3 style="text-align: right;">Date: 
+    <input type="date" id="datePicker">
+</h3>
+
+<!-- <h3 style="text-align: right;">Date: <span id="currentDate"></span></h3>
+
+<script>
+    document.getElementById("currentDate").textContent = new Date().toLocaleDateString();
+</script> -->
+
+<h3>Safety Stickers</h3>
+
+<div id="stickersContainer">
+    <!-- 15 Draggable Stickers -->
+    <div class="sticker" draggable="true">Contact with electricity</div>
+    <div class="sticker" draggable="true">Crushing caused by moving objects</div>
+    <div class="sticker" draggable="true">Entanglement in rotating equipment</div>
+    <div class="sticker" draggable="true">Exposure to thermal extremes</div>
+    <div class="sticker" draggable="true">Exposure to hazardous substances</div>
+    <div class="sticker" draggable="true">Fall from height</div>
+    <div class="sticker" draggable="true">Fire</div>
+    <div class="urt_sticker" draggable="true">Mobile equipment/personnel interaction</div>
+    <div class="sticker" draggable="true">Single vehicle event HME</div>
+    <div class="sticker" draggable="true">Uncontrolled dropped/falling objects</div>
+    <div class="sticker" draggable="true">Uncontrolled event during tyre handling</div>
+    <div class="sticker" draggable="true">Uncontrolled load during lifting operations</div>
+    <div class="sticker" draggable="true">Uncontrolled release of energy</div>
+    <div class="sticker" draggable="true">Vehicle accident on public roads</div>
+    <div class="sticker" draggable="true">Hazard 15</div>
+</div>
+
+<table id="safetyBoard">
+    <thead>
+        <tr>
+            <th>Task Number</th>
+            <th>Sticker Placement</th>
+            <th>Task Description</th>
+            <th>Task Person</th>
+            <th>Task Note</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td id="dugaar">1</td>
+            <td class="dropzone"></td>
+            <td class="editable">Click to edit</td>
+            <td class="editable">Click to edit</td>
+            <td class="editable">Click to edit</td>
+        </tr>
+        <tr>
+            <td id="dugaar">2</td>
+            <td class="dropzone"></td>
+            <td class="editable">Click to edit</td>
+            <td class="editable">Click to edit</td>
+            <td class="editable">Click to edit</td>
+        </tr>
+        <tr>
+            <td id="dugaar">3</td>
+            <td class="dropzone"></td>
+            <td class="editable">Click to edit</td>
+            <td class="editable">Click to edit</td>
+            <td class="editable">Click to edit</td>
+        </tr>
+    </tbody>
+</table>
+
+<button class="reset-btn" onclick="resetBoard()">Reset Board</button>
+
+<!-- Export as Image Button -->
+<button class="export-btn" onclick="exportAsImage()">Export as Image</button>
+
+<!-- Instructions -->
+<h3>Instuctions</h3>
+<p>
+    - Select the date. <br>
+    - Drag and drop the stickers. <br>
+    - If you want to delete the stickers, please click again. <br>
+    - To reset the board, please click "Reset" button. <br>
+    - To export the board as an image, please click "Export" button.
+</p>
+
+<!-- Change Log -->
+<h3>Change Log</h3>
+<div class="log-container" id="log"></div>
+<button onclick="toggleLog()">Hide/Unhide Log</button>
+
+<script>
+    // Allow dragging multiple stickers into a single column
+    
+    // document.querySelectorAll(".sticker").forEach(sticker => {
+    // sticker.addEventListener("dragstart", (event) => {
+    //     event.dataTransfer.setData("text", event.target.outerHTML);
+    //     setTimeout(() => event.target.remove(), 0); // Removes sticker from original location
+    //     });
+    // });
+
+    function resetBoard() {
+    document.querySelectorAll(".dropzone").forEach(dropzone => {
+        dropzone.innerHTML = ""; // Clears stickers from drop zones
+    });
+
+    document.getElementById("log").innerHTML = ""; // Clears the log
+
+    logChange("Board reset.");
+    }
+
+    document.querySelectorAll(".sticker").forEach(sticker => {
+        sticker.addEventListener("dragstart", (event) => {
+            event.dataTransfer.setData("text", event.target.outerHTML);
+        });
+    });
+
+    // document.querySelectorAll(".dropzone").forEach(dropzone => {
+    //     dropzone.addEventListener("dragover", (event) => {
+    //         event.preventDefault();
+    //     });
+
+    //     dropzone.addEventListener("drop", (event) => {
+    //         event.preventDefault();
+    //         const stickerHTML = event.dataTransfer.getData("text");
+    //         let tempDiv = document.createElement("div");
+    //         tempDiv.innerHTML = stickerHTML;
+    //         event.target.appendChild(tempDiv.firstChild); // Append dragged sticker inside dropzone
+    //         logChange("Sticker added: " + tempDiv.firstChild.innerText);
+    //     });
+    // });
+
+    document.querySelectorAll(".dropzone").forEach(dropzone => {
+    dropzone.addEventListener("dragover", (event) => {
+        event.preventDefault();
+    });
+
+    dropzone.addEventListener("drop", (event) => {
+        event.preventDefault();
+        const stickerHTML = event.dataTransfer.getData("text");
+        let tempDiv = document.createElement("div");
+        tempDiv.innerHTML = stickerHTML;
+        let sticker = tempDiv.firstChild;
+
+        // Add click event to allow removal
+        sticker.addEventListener("click", () => {
+            sticker.remove();
+            logChange("Sticker removed: " + sticker.innerText);
+        });
+
+        event.target.appendChild(sticker);
+        logChange("Sticker added: " + sticker.innerText);
+        });
+    });
+
+    // Editable fields functionality
+    document.querySelectorAll(".editable").forEach(cell => {
+        cell.addEventListener("click", function () {
+            let newText = prompt("Enter new text:", this.innerText);
+            if (newText !== null) {
+                logChange(`Field updated: '${this.innerText}' -> '${newText}'`);
+                this.innerText = newText;
+            }
+        });
+    });
+
+    // Logging changes
+    function logChange(change) {
+        const logContainer = document.getElementById("log");
+        logContainer.innerHTML += `<p>${new Date().toLocaleString()}: ${change}</p>`;
+    }
+
+    // Export table as image using html2canvas
+    function exportAsImage() {
+        html2canvas(document.getElementById("safetyBoard")).then(canvas => {
+            let image = canvas.toDataURL("image/png");
+            let a = document.createElement("a");
+            a.href = image;
+            a.download = "SafetyBoard.png";
+            a.click();
+        });
+    }
+
+    function toggleLog() {
+    let logContainer = document.getElementById("log");
+    logContainer.style.display = logContainer.style.display === "none" ? "block" : "none";
+    }
+</script>
+
+</body>
+</html>
